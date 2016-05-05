@@ -12,5 +12,8 @@ if you have a postgres server, run
   
 if you do not have postgres installed, install it at http://postgresapp.com/
 
-create the tables in the database
+create the tables in the database (if you named your database something other than 'final',
+you'll need to change the db name in models/database.js)
+
+if you get an error saying "
   $node models/database.js
