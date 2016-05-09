@@ -9,6 +9,8 @@ var debug = require('debug')('final:server');
 //replacing http with models
 var http = require('http');
 var models = require("../models");
+var express = require('express');
+
 
 /**
  * Get port from environment and store in Express.
@@ -33,6 +35,23 @@ models.sequelize.sync().then(function () {
 
 var server = http.createServer(app);
 
+var io = require('socket.io')(server);
+
+app.use(express.static('client'));
+
+io.on('connection', function(socket) {
+  socket.on('temp', function(temp) {
+    io.emit('temp', temp);
+  });
+  socket.on('disconnect', function () {
+    io.emit('message', "User disconnected");
+  });
+});
+
+// server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
+//   var addr = server.address();
+//   console.log("Chat server running at", addr.address + ":" + addr.port);
+// });
 /**
  * Listen on provided port, on all network interfaces.
  */
