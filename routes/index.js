@@ -28,5 +28,18 @@ router.post('/api/temp', function(req, res) {
   res.json({message: '200'});
 });
 
+router.post('/api/door', function(req, res, next) {
+  console.log(req.query, req.body)
+  var value = req.body.value
+
+  models.Door.create({value: value}).then(function(door){
+    // console.log(door.get({
+    //   plain: true
+    // }));
+  });
+
+  res.json({message: '200'})
+
+});
 
 module.exports = router;
