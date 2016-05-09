@@ -3,13 +3,23 @@
 /**
  * Module dependencies.
  */
+ var app = require('../app');
+ var http = require('http');
+ var express = require('express');
 
-var app = require('../app');
+ var server = http.createServer(app);
+
+ // app.set('port', process.env.PORT || '3000');
+ server.listen(3000);
+ var io = require('socket.io')(server);
+
+ app.use(express.static('client'));
+
+ console.log("SOCKET")
+
 var debug = require('debug')('final:server');
 //replacing http with models
-var http = require('http');
-var models = require("../models");
-var express = require('express');
+
 
 
 /**
@@ -18,8 +28,40 @@ var express = require('express');
 
 //changing the port definition to use app.set
 //var port = normalizePort(process.env.PORT || '3000')
-app.set('port', process.env.PORT || '3000');
+
+
+
+
+
+
+
+
+
 //app.set('port', port);
+
+
+
+/**
+ * Create HTTP server.
+ */
+
+
+
+
+io.on('connection', function(socket) {
+  global.SOCKET = socket
+  console.log('-----------a user connected-----------------------------------');
+  socket.on('temp', function(temp) {
+    console.log('A SOCKET MESSAGE NAMED TEMP WAS RECEIVED');
+  });
+  socket.on('disconnect', function () {
+    console.log('--------user disconnected');
+    io.emit('message', "User disconnected");
+  });
+
+});
+
+var models = require("../models");
 
 ///****///
 ///sequelize setup///
@@ -29,24 +71,6 @@ models.sequelize.sync().then(function () {
   });
 });
 
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-var io = require('socket.io')(server);
-
-app.use(express.static('client'));
-
-io.on('connection', function(socket) {
-  socket.on('temp', function(temp) {
-    io.emit('temp', temp);
-  });
-  socket.on('disconnect', function () {
-    io.emit('message', "User disconnected");
-  });
-});
 
 // server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
 //   var addr = server.address();
@@ -56,7 +80,7 @@ io.on('connection', function(socket) {
  * Listen on provided port, on all network interfaces.
  */
 //
-// server.listen(port);
+// server.listen('3000');
 // server.on('error', onError);
 // server.on('listening', onListening);
 

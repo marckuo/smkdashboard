@@ -4,17 +4,29 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
+
+
+
   <body>
-    <h1><%= title %></h1>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <h1 id="test"><%= title %></h1>
     <p>Welcome to <%= title %></p>
+
+    <script>
+      var socket = io();
+    </script>
+
+    <script>
+      $test = $('#test');
+      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+
+      socket.on('temp', function (data) {
+        console.log($test.text());
+        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
+        $test.text(data);
+      });
+    </script>
   </body>
 </html>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io.connect('http://localhost');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
-</script>
