@@ -15,7 +15,7 @@ h1 {
 
 div h3 {
 	color:white;
-	font-size:1.3em;
+	font-size:1.4em;
 	font-family: Source Sans Pro;
 	text-align: center;
 }
@@ -40,5 +40,5 @@ div p {
 	border-color: gray;
 	border-style: dotted;
 	opacity:0.7;
-	font-size:1.4em;
+	font-size:1.15em;
 }
