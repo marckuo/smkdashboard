@@ -42,4 +42,19 @@ router.post('/api/door', function(req, res, next) {
 
 });
 
+router.post('/api/beverage', function(req, res, next) {
+  console.log(req.query, req.body)
+  var value = req.body.value
+
+  models.Beverage.create({value: value}).then(function(beverage){
+    // console.log(door.get({
+    //   plain: true
+    // }));
+  });
+
+  res.json({message: '200'})
+
+});
+
+
 module.exports = router;
