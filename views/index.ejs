@@ -2,16 +2,17 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:900' rel='stylesheet' type='text/css'>
   </head>
   <body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <h1><%= title %></h1>
-    <p>Welcome to SMK Dashboard</p>
-    <div class="container">
-      <div class="row">
+    
+  <div class="container">
+    <h1>SMK DASHBOARD</h1>
+      <div class="row text-uppercase">
         <div id="temperature" class="col-xs-4">
           <h3>Temperature</h3>
           <p id="temp_output"></p>
@@ -19,20 +20,20 @@
         <div id="humidity" class="col-xs-4">
           <h3>Humidity</h3>
         </div>
-        <div id="door_sensor" class="col-xs-4">
-          <h3>Number of times Door opened</h3>
-        </div>
-      </div>
-      
-      <div class="row">
         <div id="decibel" class="col-xs-4">
           <h3>Decibel Monitor</h3>
         </div>
+      </div>
+      <div class="row text-uppercase">
         <div id="coffee" class="col-xs-4">
           <h3>Number of Beverages poured</h3>
         </div>
+        <div id="door_sensor" class="col-xs-4">
+          <h3>Number of times Door opened</h3>
       </div>
-    </div>
+      </div>
+   </div>
+  
 
     <script>
       var socket = io();
