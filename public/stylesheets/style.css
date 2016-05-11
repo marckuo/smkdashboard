@@ -1,8 +1,50 @@
 body {
+	background: url(../../images/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: white;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+h1 {
+	font-family:Source Sans Pro;
+	text-shadow: 2px 2px #000000;
+
+}
+
+div h3 {
+	color:white;
+	font-size:1.4em;
+	font-family: Source Sans Pro;
+	text-align: center;
+}
+
+div p {
+	font-size: 5em;
+	font-family: Source Sans Pro;
+	text-align:center;
+}
+
+.col-xs-4 {
+	background: rgba(0, 0, 0, 0.5);
+	margin: 5px;
+	height:200px;
+	width:300px;
+	
+	
+	opacity:0.7;
+	transition: all 0.5s ease;
+}
+
+.col-xs-4:hover {
+	
+	opacity:1;
+	font-size:1.2em;
 }
