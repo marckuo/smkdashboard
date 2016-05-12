@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         //var socket = io();
         console.log('THE VALUE INSIDE THE HOOK IS: ' + temp.value);
         if(global.SOCKET !== undefined){
-          global.SOCKET.emit('temp', temp.value);
+          global.SOCKET.broadcast.emit('temp', temp.value);
         }
         console.log('THE HOOK HAPPENED');
       }

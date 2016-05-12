@@ -4,7 +4,24 @@ var models  = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+      console.log("enters get function");
+      // res.render('index', { title: 'Express'} );
+
+      // models.Temp.
+                        // Temps: Temps});
+  models.sequelize.query(
+    `SELECT *
+     FROM "Temps"
+     ORDER BY id DESC
+     LIMIT 1;
+    `
+  )
+  .then(function(temp, metadata) {
+    res.render('index', { title: 'Express',
+                          temp: temp[0][0].value}
+                          );
+  }
+  );
 });
 
 router.post('/api/temp', function(req, res) {
