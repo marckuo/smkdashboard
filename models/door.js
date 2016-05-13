@@ -7,15 +7,20 @@ module.exports = function(sequelize, DataTypes) {
   }, {
      hooks: {
       afterCreate: function(door, options){
-        //var socket = io();
-        
-        
-        console.log('THE VALUE INSIDE THE HOOK IS: ' + door.value);
+        sequelize.query(
+    `SELECT count(value)
+     FROM "Doors";
+    `
+  ).then(function(door,metadata){
+        console.log(door,metadata);
+        console.log('THE VALUE INSIDE THE HOOK IS: ' + door[0][0].count);
         if(global.SOCKET !== undefined){
-          global.SOCKET.broadcast.emit('door', door.value);
+          global.SOCKET.broadcast.emit('door', door[0][0].count);
         }
+        
         console.log('THE HOOK HAPPENED');
       }
+      )}
     }
   });
   return Door;
