@@ -15,25 +15,40 @@
       <div class="row text-uppercase">
         <div id="temperature" class="col-xs-4">
           <h3>Temperature</h3>
-          <p id="temp_output"><%= temp %></p>
+          <p><span id="temp_output"></span>°C</p>
         </div>
         <div id="humidity" class="col-xs-4">
           <h3>Humidity</h3>
+            <p><span id="humid_output"></span>%</p>
         </div>
         <div id="decibel" class="col-xs-4">
           <h3>Decibel Monitor</h3>
+            <p id="decibel_output"></p>
         </div>
       </div>
       <div class="row text-uppercase">
-        <div id="coffee" class="col-xs-4">
+        <div id="beverage" class="col-xs-4">
           <h3>Number of Beverages poured</h3>
+            <p id="beverage_output"></p>
         </div>
         <div id="door_sensor" class="col-xs-4">
           <h3>Number of times Door opened</h3>
-      </div>
+            <p id="door_output"></p>
+        </div>
       </div>
    </div>
   
+    <script>
+    $.getJSON('/api/temp/last', function(data){
+      $('#temp_output').append(data.value);
+     });
+    $.getJSON('/api/humid/last', function(data){
+      $('#humid_output').append(data.value);
+     });
+    $.getJSON('/api/door/last', function(data){
+      $('#door_output').append(data.count);
+     });
+    </script>
 
     <script>
       var socket = io();
@@ -48,6 +63,28 @@
         console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
         $test.text(data);
       });
+
+      $test2 = $('#humid_output');
+      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+
+      socket.on('humid', function (data) {
+        console.log($test2.text());
+        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
+        $test2.text(data);
+      });
+
+
+      $test3 = $('#door_output');
+      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+
+      socket.on('door', function (data) {
+        console.log($test3.text());
+        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
+        $test3.text(data);
+      });
+
+
     </script> 
+
   </body>
 </html>

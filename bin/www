@@ -52,9 +52,6 @@ var debug = require('debug')('final:server');
 io.on('connection', function(socket) {
   global.SOCKET = socket
   console.log('-----------a user connected-----------------------------------');
-  socket.on('temp', function(temp) {
-    console.log('A SOCKET MESSAGE NAMED TEMP WAS RECEIVED');
-  });
   socket.on('disconnect', function () {
     console.log('--------user disconnected');
     io.emit('message', "User disconnected");

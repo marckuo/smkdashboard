@@ -4,11 +4,23 @@ var models  = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-      console.log("enters get function");
-      // res.render('index', { title: 'Express'} );
+  //     console.log("enters get function");
+  // models.sequelize.query(
+  //   `SELECT *
+  //    FROM "Temps"
+  //    ORDER BY id DESC
+  //    LIMIT 1;
+  //   `
+  // )
+  // .then(function(temp, metadata) {
+  //   res.render('index', { title: 'Express',
+  //                         temp: temp[0][0].value}
+  //                         );
+  // });
+  res.render('index',{ title: 'Express' });
+});
 
-      // models.Temp.
-                        // Temps: Temps});
+router.get('/api/temp/last', function(req, res) {
   models.sequelize.query(
     `SELECT *
      FROM "Temps"
@@ -17,12 +29,51 @@ router.get('/', function(req, res, next) {
     `
   )
   .then(function(temp, metadata) {
-    res.render('index', { title: 'Express',
-                          temp: temp[0][0].value}
-                          );
-  }
-  );
+    res.json(temp[0][0]);
+  });
 });
+
+router.get('/api/humid/last', function(req, res) {
+  models.sequelize.query(
+    `SELECT *
+     FROM "Humids"
+     ORDER BY id DESC
+     LIMIT 1;
+    `
+  )
+  .then(function(humid, metadata) {
+    console.log(humid)
+    res.json(humid[0][0]);
+  });
+});
+
+router.get('/api/door/last', function(req, res) {
+  models.sequelize.query(
+    `SELECT count(value)
+     FROM "Doors";
+    `
+  )
+  .then(function(door, metadata) {
+    console.log(door)
+    res.json(door[0][0]);
+  });
+});
+
+
+// router.get('/api/door/last', function(req, res) {
+//   models.sequelize.query(
+//     `SELECT *
+//      FROM "Door"
+//      ORDER BY id DESC
+//      LIMIT 1;
+//     `
+//   )
+//   .then(function(door, metadata) {
+//     res.json(door[0][0]);
+//   });
+// })
+
+
 
 router.post('/api/temp', function(req, res) {
   var temp = req.body.temp;
