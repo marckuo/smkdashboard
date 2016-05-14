@@ -59,6 +59,18 @@ router.get('/api/door/last', function(req, res) {
   });
 });
 
+router.get('/api/beverage/last', function(req, res) {
+  models.sequelize.query(
+    `SELECT count(value)
+     FROM "Beverages";
+    `
+  )
+  .then(function(beverage, metadata) {
+    console.log(beverage)
+    res.json(beverage[0][0]);
+  });
+});
+
 
 // router.get('/api/door/last', function(req, res) {
 //   models.sequelize.query(
@@ -100,6 +112,20 @@ router.post('/api/door', function(req, res, next) {
   var value = req.body.value
 
   models.Door.create({value: value}).then(function(door){
+    // console.log(door.get({
+    //   plain: true
+    // }));
+  });
+
+  res.json({message: '200'})
+
+});
+
+router.post('/api/beverage', function(req, res, next) {
+  console.log(req.query, req.body)
+  var value = req.body.value
+
+  models.Beverage.create({value: value}).then(function(door){
     // console.log(door.get({
     //   plain: true
     // }));
