@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
           var socket = io('http://localhost:3000');
         } else {
           var socket = io('https://quiet-castle-31566.herokuapp.com:' + process.env.PORT);
+          console.log('development port: ' + process.env.PORT);
         }
         console.log('THE VALUE INSIDE THE HOOK IS: ' + temp.value);
         //if(global.SOCKET !== undefined){
