@@ -4,7 +4,7 @@ var models  = require('../models');
 
 
 router.get('/test', function(req, res, next){
-  res.render('example_test_audio');
+  res.render('audio_p5_test');
 });
 /* GET home page. */
 router.get('/', function(req, res, next) {
