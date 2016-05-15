@@ -18,7 +18,7 @@
    //app.set('port', '3000');
    server.listen('3000');
  }
- var io = require('socket.io')(server)
+ var io = require('socket.io')(server);
  forceNew: true;
 
  // Heroku setting for long polling - assuming io is the Socket.IO server object
