@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     hooks: {
       afterCreate: function(humid, options){
         //var socket = io();
-        var socket = io('http://localhost:3000');
+        var socket = io(global.APP_URL); 
         console.log('THE VALUE INSIDE THE HOOK IS: ' + humid.value);
         //if(global.SOCKET !== undefined){
           socket.emit('humid', humid.value);

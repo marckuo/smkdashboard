@@ -4,6 +4,13 @@ var path      = require('path');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.json')[env];
+var app_url;
+
+if (env === 'development'){
+  global.APP_URL = 'http://localhost:3000';
+} else {
+  global.APP_URL =  'https://quiet-castle-31566.herokuapp.com';
+}
 
 if (!global.hasOwnProperty('db')) {
 
@@ -40,7 +47,6 @@ if (!global.hasOwnProperty('db')) {
       global.db[modelName].associate(db);
     }
   });
-  console.log('point 1')
 
   /*
     Associations can be defined here. E.g. like this:
