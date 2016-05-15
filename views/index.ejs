@@ -48,6 +48,9 @@
     $.getJSON('/api/door/last', function(data){
       $('#door_output').append(data.count);
      });
+    $.getJSON('/api/beverage/last', function(data){
+      $('#beverage_output').append(data.count);
+     });
     </script>
 
     <script>
@@ -81,6 +84,15 @@
         console.log($test3.text());
         console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
         $test3.text(data);
+      });
+
+      $test4 = $('#beverage_output');
+      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+
+      socket.on('beverage', function (data) {
+        console.log($test4.text());
+        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
+        $test4.text(data);
       });
 
 
