@@ -10,7 +10,14 @@
  var server = http.createServer(app);
 
  // app.set('port', process.env.PORT || '3000');
- server.listen(3000);
+ if(app.get('env') !== 'development'){
+   //app.set('port', process.env.PORT);
+   server.listen(process.env.PORT);
+ }else{
+   console.log('in development section')
+   //app.set('port', '3000');
+   server.listen('3000');
+ }
  var io = require('socket.io')(server)
  forceNew: true;
 
