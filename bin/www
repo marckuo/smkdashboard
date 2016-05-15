@@ -10,15 +10,22 @@
  var server = http.createServer(app);
 
  // app.set('port', process.env.PORT || '3000');
- server.listen(3000);
- var io = require('socket.io')(server)
+ if(app.get('env') !== 'development'){
+   //app.set('port', process.env.PORT);
+   server.listen(process.env.PORT);
+ }else{
+   console.log('in development section')
+   //app.set('port', '3000');
+   server.listen('3000');
+ }
+ var io = require('socket.io')(server);
  forceNew: true;
+
+ // Heroku setting for long polling - assuming io is the Socket.IO server object
 
  app.use(express.static('client'));
 
- console.log("SOCKET")
-
-var debug = require('debug')('final:server');
+ var debug = require('debug')('final:server');
 //replacing http with models
 
 
@@ -52,6 +59,17 @@ var debug = require('debug')('final:server');
 io.on('connection', function(socket) {
   global.SOCKET = socket
   console.log('-----------a user connected-----------------------------------');
+
+  socket.on('temp', function(data){
+    console.log('temp' + data);
+    socket.broadcast.emit('temp', data  );
+  });
+
+  socket.on('humid', function(data){
+    console.log('humid' + data);
+    socket.broadcast.emit('humid', data  );
+  });
+
   socket.on('disconnect', function () {
     console.log('--------user disconnected');
     io.emit('message', "User disconnected");
