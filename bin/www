@@ -10,8 +10,9 @@
  var server = http.createServer(app);
 
  // app.set('port', process.env.PORT || '3000');
+ var io = require('socket.io').listen(server);
  server.listen(3000);
- var io = require('socket.io')(server)
+
  forceNew: true;
 
  app.use(express.static('client'));
@@ -49,8 +50,9 @@ var debug = require('debug')('final:server');
 
 
 
-io.on('connection', function(socket) {
-  global.SOCKET = socket
+io.sockets.on('connection', function(socket) {
+  global.SOCKET = socket;
+  socket.join('dashboard');
   console.log('-----------a user connected-----------------------------------');
   socket.on('disconnect', function () {
     console.log('--------user disconnected');

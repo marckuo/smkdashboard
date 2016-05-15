@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var models  = require('../models');
 
+
+router.get('/test', function(req, res, next){
+  res.render('example_test_audio');
+});
 /* GET home page. */
 router.get('/', function(req, res, next) {
   //     console.log("enters get function");
@@ -22,11 +26,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/temp/last', function(req, res) {
   models.sequelize.query(
-    `SELECT *
-     FROM "Temps"
-     ORDER BY id DESC
-     LIMIT 1;
-    `
+    `SELECT * FROM "Temps" ORDER BY id DESC LIMIT 1;`
   )
   .then(function(temp, metadata) {
     res.json(temp[0][0]);
@@ -35,26 +35,18 @@ router.get('/api/temp/last', function(req, res) {
 
 router.get('/api/humid/last', function(req, res) {
   models.sequelize.query(
-    `SELECT *
-     FROM "Humids"
-     ORDER BY id DESC
-     LIMIT 1;
-    `
+    `SELECT * FROM "Humids" ORDER BY id DESC LIMIT 1;`
   )
   .then(function(humid, metadata) {
-    console.log(humid)
     res.json(humid[0][0]);
   });
 });
 
 router.get('/api/door/last', function(req, res) {
   models.sequelize.query(
-    `SELECT count(value)
-     FROM "Doors";
-    `
+    `SELECT count(value) FROM "Doors";`
   )
   .then(function(door, metadata) {
-    console.log(door)
     res.json(door[0][0]);
   });
 });
@@ -96,16 +88,12 @@ router.post('/api/temp', function(req, res) {
 });
 
 router.post('/api/door', function(req, res, next) {
-  console.log(req.query, req.body)
-  var value = req.body.value
+  var value = req.body.value;
 
   models.Door.create({value: value}).then(function(door){
-    // console.log(door.get({
-    //   plain: true
-    // }));
   });
 
-  res.json({message: '200'})
+  res.json({message: '200'});
 
 });
 
