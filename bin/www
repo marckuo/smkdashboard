@@ -23,9 +23,7 @@
 
  app.use(express.static('client'));
 
- console.log("SOCKET")
-
-var debug = require('debug')('final:server');
+ var debug = require('debug')('final:server');
 //replacing http with models
 
 
@@ -56,7 +54,7 @@ var debug = require('debug')('final:server');
 
 
 
-io.on('connection', function(socket) {
+io.sockets.on('connection', function(socket) {
   global.SOCKET = socket
   console.log('-----------a user connected-----------------------------------');
   socket.on('disconnect', function () {
