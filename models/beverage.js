@@ -1,4 +1,7 @@
+/* jshint node: true */
 'use strict';
+var io = require('socket.io-client');
+
 module.exports = function(sequelize, DataTypes) {
   var Beverage = sequelize.define('Beverage', {
     value: DataTypes.BOOLEAN
@@ -13,10 +16,9 @@ module.exports = function(sequelize, DataTypes) {
   ).then(function(beverage,metadata){
         console.log(beverage,metadata);
         console.log('THE VALUE INSIDE THE HOOK IS: ' + beverage[0][0].count);
-        if(global.SOCKET !== undefined){
-          global.SOCKET.broadcast.emit('beverage', beverage[0][0].count);
-        }
-        
+
+        var socket = io(global.APP_URL);
+        socket.emit('beverage', beverage[0][0].count);
         console.log('THE HOOK HAPPENED');
       }
       )}

@@ -35,6 +35,10 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('humid', data  );
   });
 
+  socket.on('beverage', function(data){
+    socket.broadcast.emit('beverage', data  );
+  });
+
   socket.on('disconnect', function () {
     console.log('--------user disconnected');
     io.emit('message', "User disconnected");
