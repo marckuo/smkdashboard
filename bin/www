@@ -77,6 +77,12 @@ io.sockets.on('connection', function(socket) {
     io.emit('message', "User disconnected");
   });
 
+  socket.on('sound', function(data){
+    console.log('sound')
+    console.log(data);
+    socket.broadcast.emit('sound', data);
+  });
+
 });
 
 var models = require("../models");

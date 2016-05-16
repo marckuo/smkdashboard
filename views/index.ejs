@@ -8,8 +8,12 @@
   </head>
   <body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="javascripts/p5.sound.js"></script>
+  <script language="javascript" type="text/javascript" src="javascripts/index_sketch.js"></script>
+
+
   <div class="container">
     <h1>SMK DASHBOARD</h1>
       <div class="row text-uppercase">
@@ -37,7 +41,7 @@
         </div>
       </div>
    </div>
-  
+
     <script>
     $.getJSON('/api/temp/last', function(data){
       $('#temp_output').append(data.value);
@@ -58,6 +62,7 @@
     </script>
 
     <script>
+      var volume;
       $test = $('#temp_output');
       console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
 
@@ -95,8 +100,11 @@
         $test4.text(data);
       });
 
+      socket.on('sound', function(data){
+          // console.log(data);
+        }
+      );
 
-    </script> 
-
+    </script>
   </body>
 </html>
