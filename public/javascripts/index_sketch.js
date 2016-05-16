@@ -12,6 +12,8 @@ function setup() {
   socket.on('sound',
     function(data){
       vol = data;
+      console.log('inside index_sketch')
+      console.log('index_sketch' + data)
     }
 );
 }
