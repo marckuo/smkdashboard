@@ -9,6 +9,13 @@
   <body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>  $(window).load(function(){
+      $(".preloader").fadeOut("slow");
+      });</script>
+
+  <div class="preloader">
+   <div><img src="../../images/loader.gif"/></div>
+  </div>
     
   <div class="container">
     <h1>SMK DASHBOARD</h1>
@@ -94,6 +101,7 @@
         console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
         $test4.text(data);
       });
+
 
 
     </script> 
