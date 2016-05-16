@@ -2,25 +2,19 @@ var socket;
 function setup() {
   // Create an Audio input
   mic = new p5.AudioIn();
+
+  //connects a socket to the page URL
   socket = io(window.location.origin);
+
   // start the Audio Input.
   // By default, it does not .connect() (to the computer speakers)
   mic.start();
 }
 
 function draw() {
-  var $output = $('#testing');
-  //$output.text("this is working");
-  // Get the overall volume (between 0 and 1.0)
+  //vol stores the stream of volume information
   var vol = mic.getLevel();
 
-  socket.emit('sound', vol);//?????????
-
-  // setTimeout(function(){
-    $output.text(vol);
-    // console.log(vol)
-  //   socket.emit('sound', vol);
-  // }, 5000);
-
-
+  //sends volume stream to the server, which is then sent to index.ejs
+  socket.emit('sound', vol);
 }

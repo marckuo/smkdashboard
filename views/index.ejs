@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:900' rel='stylesheet' type='text/css'>
-  </head>
-  <body>
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:900' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.js"></script>
   <script language="javascript" type="text/javascript" src="javascripts/p5.sound.js"></script>
   <script language="javascript" type="text/javascript" src="javascripts/index_sketch.js"></script>
-
 
   <div class="container">
     <h1>SMK DASHBOARD</h1>
@@ -62,49 +62,29 @@
     </script>
 
     <script>
-      var volume;
-      $test = $('#temp_output');
-      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+      $temp_output = $('#temp_output');
 
       socket.on('temp', function (data) {
-        console.log($test.text());
-        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
-        $test.text(data);
+        $temp_output.text(data);
       });
 
-      $test2 = $('#humid_output');
-      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+      $humid_output = $('#humid_output');
 
       socket.on('humid', function (data) {
-        console.log($test2.text());
-        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
-        $test2.text(data);
+        $humid_output.text(data);
       });
 
-
-      $test3 = $('#door_output');
-      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+      $door_output = $('#door_output');
 
       socket.on('door', function (data) {
-        console.log($test3.text());
-        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
-        $test3.text(data);
+        $door_output.text(data);
       });
 
-      $test4 = $('#beverage_output');
-      console.log('INSIDE EJS BUT OUTSIDE THE SOCKET FUNC');
+      $beverage_output = $('#beverage_output');
 
       socket.on('beverage', function (data) {
-        console.log($test4.text());
-        console.log('I AM INSIDE OF THE EJS SCRIPT!!!!!!!!!' + data);
-        $test4.text(data);
+        $beverage_output.text(data);
       });
-
-      socket.on('sound', function(data){
-          console.log('inside index.ejs')
-          console.log(data);
-        }
-      );
 
     </script>
   </body>

@@ -8,13 +8,8 @@ module.exports = function(sequelize, DataTypes) {
   },{
     hooks: {
       afterCreate: function(temp, options){
-        console.log('THE VALUE INSIDE THE HOOK IS: ' + temp.value);
-
-        //if(global.SOCKET !== undefined){
-          var socket = io(global.APP_URL);
-          socket.emit('temp', temp.value);
-        //}
-        console.log('THE HOOK HAPPENED');
+        var socket = io(global.APP_URL);
+        socket.emit('temp', temp.value);
       }
     }
   });
