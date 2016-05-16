@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   var Beverage = sequelize.define('Beverage', {
     value: DataTypes.BOOLEAN
   }, {
+
     hooks: {
       afterCreate: function(beverage, options){
         sequelize.query(
@@ -19,6 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         console.log('THE HOOK HAPPENED');
       }
       )}
+
     }
   });
   return Beverage;

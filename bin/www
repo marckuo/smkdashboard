@@ -38,14 +38,6 @@
 //changing the port definition to use app.set
 //var port = normalizePort(process.env.PORT || '3000')
 
-
-
-
-
-
-
-
-
 //app.set('port', port);
 
 
