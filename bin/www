@@ -45,6 +45,8 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('sound', function(data){
     socket.broadcast.emit('sound', data);
+    console.log('sound received in www');
+    console.log(data);
   });
 
   socket.on('disconnect', function () {
