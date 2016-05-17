@@ -21,7 +21,9 @@ function draw() {
   dataArr.push(vol);
   dataArr.shift();
 
-  for(var i = 0; i < dataArr.length; i++)
+  for(var i = 0; i < dataArr.length; i++){
+    
+  }
 
   background(200);
   ellipse(width/2, height/2, 10+vol*200, 10+vol*200);
