@@ -58,38 +58,39 @@ router.get('/last/:sensor_name', function(req, res) {
   }
 });
 
-router.post('/api/new/:sensor', function(req, res) {
-  var sensor_name = req.params.sensor_name;
-  var temp = req.body.temp;
-  var humid = req.body.humid;
-
-  models.Temp.create({value: temp}, {fields: ['value']}).then(function(temp){
-  });
-
-  models.Humid.create({value: humid}, {fields: ['value']}).then(function(humid){
-  });
-
-  res.json({message: '200'});
-});
-
-router.post('/api/door', function(req, res, next) {
+router.post('/new', function(req, res) {
+  var sensor_name = req.body.sensor_name;
   var value = req.body.value;
 
-  models.Door.create({value: value}).then(function(door){
-  });
+  switch(sensor_name){
+    case 'temp':
+      models.Temp.create({value: value}, {fields: ['value']})
+        .then(
+          function(temp){}
+        );
+      break;
+    case 'humid':
+      models.Humid.create({value: value}, {fields: ['value']})
+      .then(
+        function(humid){}
+      );
+      break;
+    case 'door':
+      models.Door.create({value: value}, {fields: ['value']})
+      .then(
+        function(door){}
+      );
+      break;
+    case 'beverage':
+      models.Beverage.create({value: value}, {fields: ['value']})
+      .then(
+        function(beverage){}
+      );
+      break;
+  }
 
   res.json({message: '200'});
-
 });
 
-router.post('/api/beverage', function(req, res, next) {
-  var value = req.body.value;
-
-  models.Beverage.create({value: value}).then(function(beverage){
-  });
-
-  res.json({message: '200'});
-
-});
 
 module.exports = router;
