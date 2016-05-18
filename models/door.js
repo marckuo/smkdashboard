@@ -7,13 +7,6 @@ module.exports = function(sequelize, DataTypes) {
     value: DataTypes.BOOLEAN
   }, {
 
-    classMethods: {
-      count: function(){
-        return Door.findAll({
-        group: [sequelize.fn('date_trunc', 'day', sequelize.col('createdAt'))]
-      })
-      }
-    },
      hooks: {
       afterCreate: function(door, options){
         sequelize.query(

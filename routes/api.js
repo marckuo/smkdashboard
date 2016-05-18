@@ -35,8 +35,21 @@ router.get('/last/:sensor_name', function(req, res) {
     case 'door':
       //get all entries made today
       //get count
-      models.Door.count()
+
+      var today = new Date();
+      var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+      var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
+
+      models.Door.count({
+        where: {
+          createdAt: {
+            $gt: startDate,
+            $lt: endDate
+          }
+        }
+      })
       .then(function(door_num, metadata){
+        console.log(door_num)
         res.json(door_num);
       });
       break;
