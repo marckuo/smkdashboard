@@ -2,17 +2,14 @@ var express = require('express');
 var router = express.Router();
 var models  = require('../models');
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-
 router.get('/', function(req, res){
   res.json('testing');
 });
 
 router.get('/last/:sensor_name', function(req, res) {
-
+  var today = new Date();
+  var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+  var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
   var sensor_name = req.params.sensor_name;
 
   switch(sensor_name) {
@@ -33,13 +30,6 @@ router.get('/last/:sensor_name', function(req, res) {
       });
       break;
     case 'door':
-      //get all entries made today
-      //get count
-
-      var today = new Date();
-      var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-      var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
-
       models.Door.count({
         where: {
           createdAt: {
@@ -49,38 +39,27 @@ router.get('/last/:sensor_name', function(req, res) {
         }
       })
       .then(function(door_num, metadata){
-        console.log(door_num)
         res.json(door_num);
       });
       break;
-    case 'coffee':
-
+    case 'beverage':
+      models.Beverage.count({
+        where: {
+          createdAt: {
+            $gt: startDate,
+            $lt: endDate
+          }
+        }
+      })
+      .then(function(beverage_num, metadata){
+        res.json(beverage_num);
+      });
       break;
   }
 });
 
-router.get('/api/door/last', function(req, res) {
-  models.sequelize.query(
-    `SELECT count(value) FROM "Doors";`
-  )
-  .then(function(door, metadata) {
-    res.json(door[0][0]);
-  });
-});
-
-router.get('/api/beverage/last', function(req, res) {
-  models.sequelize.query(
-    `SELECT count(value)
-     FROM "Beverages";
-    `
-  )
-  .then(function(beverage, metadata) {
-    console.log(beverage)
-    res.json(beverage[0][0]);
-  });
-});
-
-router.post('/api/temp', function(req, res) {
+router.post('/api/new/:sensor', function(req, res) {
+  var sensor_name = req.params.sensor_name;
   var temp = req.body.temp;
   var humid = req.body.humid;
 
