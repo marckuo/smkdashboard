@@ -52,6 +52,7 @@ if (!global.hasOwnProperty('db')) {
     Associations can be defined here. E.g. like this:
     global.db.User.hasMany(global.db.SomethingElse)
   */
+  global.db.Member.hasMany(global.db.Tap, {as: 'Taps'});
 }
 
 module.exports = global.db

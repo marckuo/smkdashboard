@@ -1,27 +1,17 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Members', {
+    return queryInterface.createTable('Taps', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING
-      },
-      lastName: {
-        type: Sequelize.STRING
-      },
-      rfidKey: {
-        type: Sequelize.STRING,
+      value: {
         allowNull: false,
-        unique: true
+        type: Sequelize.STRING
       },
-      signedIn: {
-        type: Sequelize.BOOLEAN
-      }
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -29,10 +19,18 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      member_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Members",
+          key: "id"
+        },
       }
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Members');
+    return queryInterface.dropTable('Taps');
   }
 };

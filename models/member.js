@@ -6,14 +6,8 @@ module.exports = function(sequelize, DataTypes) {
   var Member = sequelize.define("Member", {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    rfidKey: {type: DataTypes.STRING, unique: true}
-  },{
-    hooks: {
-      afterCreate: function(temp, options){
-        var socket = io(global.APP_URL);
-        socket.emit('temp', temp.value);
-      }
-    }
+    rfidKey: {type: DataTypes.STRING, unique: true},
+    signedIn: DataTypes.BOOLEAN
   });
 
   return Member;
