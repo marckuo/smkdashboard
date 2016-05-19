@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
   var Member = sequelize.define("Member", {
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    rfidKey: DataTypes.STRING
+    rfidKey: {type: DataTypes.STRING, unique: true}
   },{
     hooks: {
       afterCreate: function(temp, options){

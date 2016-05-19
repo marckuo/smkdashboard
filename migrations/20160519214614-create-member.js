@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('Doors', {
+    return queryInterface.createTable('Members', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       rfidKey: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +29,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Doors');
+    return queryInterface.dropTable('Members');
   }
 };
