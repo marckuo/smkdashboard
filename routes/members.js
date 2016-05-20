@@ -49,8 +49,6 @@ router.post('/tap', function(req, res, next){
             },
             {fields: ['member_id', 'value']}
           );
-
-
         res.json({message: member.signedIn});
       }
 
