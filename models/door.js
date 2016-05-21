@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
   var Door = sequelize.define('Door', {
     value: DataTypes.BOOLEAN
   }, {
+
      hooks: {
       afterCreate: function(door, options){
         sequelize.query(

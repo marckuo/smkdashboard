@@ -43,16 +43,16 @@
    </div>
 
     <script>
-    $.getJSON('/api/temp/last', function(data){
+    $.getJSON('/api/last/temp', function(data){
       $('#temp_output').append(data.value);
      });
-    $.getJSON('/api/humid/last', function(data){
+    $.getJSON('/api/last/humid', function(data){
       $('#humid_output').append(data.value);
      });
-    $.getJSON('/api/door/last', function(data){
+    $.getJSON('/api/last/door', function(data){
       $('#door_output').append(data.count);
      });
-    $.getJSON('/api/beverage/last', function(data){
+    $.getJSON('/api/last/beverage', function(data){
       $('#beverage_output').append(data.count);
      });
     </script>
