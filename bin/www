@@ -28,6 +28,7 @@ io.sockets.on('connection', function(socket) {
   console.log('-----------a user connected-----------------------------------');
 
   socket.on('temp', function(data){
+    console.log('broadcasting temp: ' + data);
     socket.broadcast.emit('temp', data  );
   });
 
