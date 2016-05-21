@@ -7,6 +7,10 @@ router.get('/test', function(req, res, next){
   res.render('audio_p5_test');
 });
 
+router.get('/sign_up', function(req, res, next) {
+  res.render('sign_up', {rfidKey: req.params.rfidKey});
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index',{ title: 'Express' });
