@@ -11,11 +11,6 @@ router.get('/sign_up', function(req, res, next) {
   res.render('sign_up', {rfidKey: req.params.rfidKey});
 });
 
-router.post('/sign_up', function(req, res, next){
-  console.log(req.body);
-  res.json('message: 200');
-});
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index',{ title: 'Express' });
