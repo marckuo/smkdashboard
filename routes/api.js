@@ -80,7 +80,7 @@ router.get('/all/:sensor_name', function(req, res) {
     case 'door':
       models.Door.findAll()
       .then(function(door_num, metadata){
-        res.json(door);
+        res.json(door_num);
       });
       break;
     case 'beverage':
