@@ -58,6 +58,40 @@ router.get('/last/:sensor_name', function(req, res) {
   }
 });
 
+router.get('/all/:sensor_name', function(req, res) {
+  var today = new Date();
+  var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+  var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
+  var sensor_name = req.params.sensor_name;
+
+  switch(sensor_name) {
+    case 'temp':
+      models.Temp.findAll()
+      .then(function(temp, metadata) {
+        res.json(temp);
+      });
+      break;
+    case 'humid':
+      models.Humid.findAll()
+      .then(function(humid, metadata) {
+        res.json(humid);
+      });
+      break;
+    case 'door':
+      models.Door.findAll()
+      .then(function(door_num, metadata){
+        res.json(door);
+      });
+      break;
+    case 'beverage':
+      models.Beverage.findAll()
+      .then(function(beverage_num, metadata){
+        res.json(beverage_num);
+      });
+      break;
+  }
+});
+
 router.post('/new', function(req, res) {
   var sensor_name = req.body.sensor_name;
   var value = req.body.value;
