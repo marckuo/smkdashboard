@@ -15,11 +15,16 @@ module.exports = function(sequelize, DataTypes) {
      WHERE createdAt: ;
     `
   ).then(function(door,metadata){
-        console.log(door,metadata);
-        console.log('THE VALUE INSIDE THE HOOK IS: ' + door[0][0].count);
-        if(global.SOCKET !== undefined){
-          global.SOCKET.broadcast.emit('door', door[0][0].count);
-        }
+        // console.log(door,metadata);
+        // console.log('THE VALUE INSIDE THE HOOK IS: ' + door[0][0].count);
+        // if(global.SOCKET !== undefined){
+        //   global.SOCKET.broadcast.emit('door', door[0][0].count);
+        // }
+
+        var socket = io(global.APP_URL);
+        console.log('THE VALUE INSIDE THE HOOK IS: ' + door.value);
+        //if(global.SOCKET !== undefined){
+        socket.emit('humid', door.value);
 
         console.log('THE HOOK HAPPENED');
       }
