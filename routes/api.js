@@ -2,10 +2,6 @@ var express = require('express');
 var router = express.Router();
 var models  = require('../models');
 
-router.get('/', function(req, res){
-  res.json('testing');
-});
-
 router.get('/last/:sensor_name', function(req, res) {
   var today = new Date();
   var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
