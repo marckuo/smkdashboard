@@ -5,7 +5,22 @@ var io = require('socket.io-client');
 module.exports = function(sequelize, DataTypes) {
   var Door = sequelize.define('Door', {
     value: DataTypes.BOOLEAN
-  }, {
+  },
+  {
+    scopes: {
+      days: function(dates){
+        return {
+          where: {
+            createdAt: {
+              $gt: dates.startDate,
+              $lt: dates.endDate
+            }
+          },
+          attributes: ['createdAt', 'value'],
+          raw: true
+        }
+      }
+    },
      hooks: {
       afterCreate: function(door, options){
         var today = new Date();

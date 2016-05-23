@@ -7,27 +7,44 @@ module.exports = function(sequelize, DataTypes) {
     value: DataTypes.BOOLEAN
   },
   {
-    //////////////////////////////////////////////////////
     scopes: {
-      last_day: function(){
-        var time_arr = [];
+      days: function(dates){
+        return {
+          where: {
+            createdAt: {
+              $gt: dates.startDate,
+              $lt: dates.endDate
+            }
+          },
+          attributes: ['createdAt', 'value'],
+          raw: true
+        }
+      }
+    },
+    hooks: {
+      afterCreate: function(beverage, options){
         var today = new Date();
         var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
         var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
-
-        return {
+        this.count({
           where: {
             createdAt: {
               $gt: startDate,
               $lt: endDate
             }
-          },
-          attributes: ['createdAt'],
-          raw: true
-
-        }
+          }
+        })
+        .then(function(beverage_num, metadata){
+            var socket = io(global.APP_URL);
+            socket.emit('beverage', beverage_num);
+          }
+        );
       }
-    },
+    }
+  }
+);
+  return Beverage;
+};
     //////////////////////////////////////////////////////
    //
   //  classMethods: {
@@ -98,28 +115,3 @@ module.exports = function(sequelize, DataTypes) {
    //
   //     }
   //   },
-
-    hooks: {
-      afterCreate: function(beverage, options){
-        var today = new Date();
-        var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-        var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
-        Beverage.count({
-          where: {
-            createdAt: {
-              $gt: startDate,
-              $lt: endDate
-            }
-          }
-        })
-        .then(function(beverage_num, metadata){
-            var socket = io(global.APP_URL);
-            socket.emit('beverage', beverage_num);
-          }
-        );
-      }
-    }
-  }
-);
-  return Beverage;
-};
