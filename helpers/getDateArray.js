@@ -1,31 +1,35 @@
 var models  = require('../models');
-
+var _ = require('lodash');
+var moment = require('moment');
 module.exports = function(model, time_frame, callback) {
-  var today = new Date();
-  var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
   var time_arr = [];
+  var time_bin;
 
   if(time_frame === 'day'){
-    time_arr = getTimeArr(24, 60 * 60 * 1000, endDate);
+    time_bin = 'hours';
+    time_arr = getTimeArr(24, time_bin);
   } else if (time_frame === 'week') {
-    time_arr = getTimeArr(7, 24 * 60 * 60 * 1000, endDate);
+    time_bin = 'days';
+    time_arr = getTimeArr(7, time_bin);
   } else if (time_frame === 'month') {
-    time_arr = getTimeArr(30, 24 * 60 * 60 * 1000, endDate);
+    time_bin = 'days';
+    time_arr = getTimeArr(moment().daysInMonth(), time_bin);
   }
-  time_arr.reverse();
 
-  var return_arr = new Array(time_arr.length + 1).join('0').split('').map(parseFloat);
+  var return_arr = _.fill(Array(time_arr.length), 0);
 
-  model.scope({ method: ['days', { startDate: time_arr[0].startDate , endDate: time_arr[time_arr.length - 1].endDate}]})
+  model.scope({ method: ['days', { startDate: time_arr[0].toDate() , endDate: _.last(time_arr).add(1, time_bin).toDate()}]})
     .findAll()
     .then(function(result){
+      console.log('------------inside then')
+      console.log(result);
       var timestamps = result.map(function(obj){ return [obj.createdAt, obj.value] });
       for(var j = 0; j < time_arr.length; j++){
         var valueArr = [];
         timestamps.map(function(obj){
           var time = obj[0];
           var value = obj[1];
-          if(time > time_arr[j].startDate && time < time_arr[j].endDate){
+          if(moment(time).isSame(time_arr[j], time_bin)){
             if(model.name === 'Beverage' || model.name === 'Door'){
               return_arr[j] += 1;
             } else {
@@ -33,33 +37,21 @@ module.exports = function(model, time_frame, callback) {
             }
           }
         });
-        return_arr[j] = valueArr.length === 0 ? 0 : Math.round(average(valueArr)  * 10) / 10;
+        console.log(valueArr)
+        return_arr[j] = valueArr.length <= 0 ? 0 : Math.round(_.mean(valueArr)  * 10) / 10;
       }
       callback(return_arr);
     });
 }
 
-function average(arr){
-  if(arr.length <= 0){
-    return 0;
-  }
-  var sum = 0;
-  for( var i = 0; i < arr.length; i++ ){
-    sum += parseInt( arr[i], 10 ); //don't forget to add the base
-  }
-
-  return  sum/arr.length;
-}
-
-function getTimeArr(numDays, timeSlice, endDate){
+function getTimeArr(numDays, time_bin){
   var time_arr = [];
   for(var i = 0; i < numDays; i++){
-    var startDate = new Date(endDate - timeSlice);
-    time_arr.push({
-      startDate: startDate,
-      endDate: endDate
-    });
-    endDate = startDate;
+    //console.log(today.subtract(1, 'days').toDate());
+    time_arr.push(moment(0, 'HH').add(1,time_bin).subtract(1,'ms').subtract(i, time_bin));
+    //console.log('today: ' + today.toDate())
   }
-  return time_arr;
+  //  console.log(time_arr)//.map(function(obj){ obj.toDate() }))
+  console.log(time_arr.map(function(o){return o.toDate()}))
+  return time_arr.reverse();
 }
