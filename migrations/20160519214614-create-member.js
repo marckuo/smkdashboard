@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-  },
+  
   down: function(queryInterface, Sequelize) {
     return queryInterface.dropTable('Members');
   }

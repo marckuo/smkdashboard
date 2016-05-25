@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css'/>
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:900' rel='stylesheet' type='text/css'>
+  <script>
+   
+    
+  </script>
+</head>
+
+<body>
+
+  <div class="container">
+    <h3>Welcome to Lighthouse Labs!!</h3>
+    <h3>Please sign in by tapping your Lighthouse key card on ------></h3>
+    <h3>To sign up, please tap a blank card on a reader and follow the instructions on the screen</h3>
+    <input type = "text" id="rfidKey" value= "<%= rfidKey %>" oninput="location.href = '/members/sign_up';"/>
+  </div>
+
+  </body>
+</html>
