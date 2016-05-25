@@ -27,13 +27,17 @@ module.exports = function(model, time_frame, callback) {
           var value = obj[1];
           if(time > time_arr[j].startDate && time < time_arr[j].endDate){
             if(model.name === 'Beverage' || model.name === 'Door'){
+              console.log('inside bev/door')
               return_arr[j] += 1;
+              console.log(return_arr)
             } else {
               valueArr.push(value);
             }
           }
         });
-        return_arr[j] = valueArr.length === 0 ? 0 : Math.round(average(valueArr)  * 10) / 10;
+        if(model.name === 'Temp' || model.name === 'Humid'){
+          return_arr[j] = valueArr.length === 0 ? 0 : Math.round(average(valueArr)  * 10) / 10;
+        }
       }
       callback(return_arr);
     });
