@@ -7,7 +7,7 @@ var config    = require(__dirname + '/../config/config.json')[env];
 var app_url;
 
 if (env === 'development'){
-  global.APP_URL = 'http://localhost:3000';
+  global.APP_URL = 'http://localhost:4000';
 } else {
   global.APP_URL =  'https://quiet-castle-31566.herokuapp.com';
 }
