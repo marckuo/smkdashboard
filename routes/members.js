@@ -15,14 +15,27 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/welcome_page', function(req, res, next) {
+  var rfidKey = req.query.rfidKey
+  res.render('welcome_page', {rfidKey: rfidKey});
+  
+});
+
+/*router.get('/sign_up', function(req, res, next) {
+  var rfidKey = req.query.rfidKey
+  res.render('sign_up', {rfidKey: rfidKey});
+
+});*/
+
 router.post('/new', function(req, res, next){
   var test = models.Member.create(
     {
       rfidKey: req.body.rfidKey,
       firstName: req.body.firstName,
-      lastName: req.body.lastName
+      lastName: req.body.lastName,
+      email: req.body.email
     },
-    { fields: ['rfidKey', 'firstName', 'lastName'] }
+    { fields: ['rfidKey', 'firstName', 'lastName', 'email'] }
   )
   .then(function(response){
     res.json({message: 200});
@@ -37,7 +50,10 @@ router.post('/tap', function(req, res, next){
     .findOne({ where: { rfidKey: req.body.rfidKey } })
     .then(function(member){
       if(member === null){
-        res.json({message: 'rfidKey not registered'});
+        var string = encodeURIComponent(req.body.rfidKey);
+        console.log(string)
+        res.redirect('sign_up?rfidKey=' + string);
+
       } else {
         member.signedIn = !member.signedIn;
         member.save();
