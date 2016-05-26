@@ -1,11 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var models  = require('../models');
+var io = require('socket.io-client');
 
-
-router.get('/test', function(req, res, next){
-  res.render('audio_p5_test');
-});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -18,7 +15,6 @@ router.get('/', function(req, res, next) {
 router.get('/welcome_page', function(req, res, next) {
   var rfidKey = req.query.rfidKey
   res.render('welcome_page', {rfidKey: rfidKey});
-  
 });
 
 /*router.get('/sign_up', function(req, res, next) {
@@ -52,7 +48,7 @@ router.post('/tap', function(req, res, next){
       if(member === null){
         var string = encodeURIComponent(req.body.rfidKey);
         console.log(string)
-        res.redirect('sign_up?rfidKey=' + string);
+        res.json('message: rfid Key not registered');
 
       } else {
         member.signedIn = !member.signedIn;
@@ -64,8 +60,20 @@ router.post('/tap', function(req, res, next){
               value: member.signedIn
             },
             {fields: ['member_id', 'value']}
-          );
-        res.json({message: member.signedIn});
+          ).then(function(tap){
+            console.log(member)
+            models.Member.count({
+              where: {
+                signedIn: true
+              }
+            }).then(function(member_num){
+              var socket = io(global.APP_URL);
+              socket.emit('member', member_num);
+            });
+            res.json({message: tap.value});
+          });
+
+
       }
 
     })

@@ -1,6 +1,7 @@
 /* jshint node: true */
 "use strict";
 var io = require('socket.io-client');
+var models  = require('../models');
 
 module.exports = function(sequelize, DataTypes) {
   var Tap = sequelize.define("Tap", {
