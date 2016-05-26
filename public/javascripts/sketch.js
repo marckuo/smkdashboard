@@ -1,6 +1,6 @@
 var socket;
 var fft;
-var binCount = 256;
+var binCount = 128;
 var bins = new Array(binCount);
 
 function setup() {
