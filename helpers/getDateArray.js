@@ -33,7 +33,9 @@ module.exports = function(model, time_frame, callback) {
             }
           }
         });
-        return_arr[j] = valueArr.length === 0 ? 0 : Math.round(average(valueArr)  * 10) / 10;
+        if(model.name === 'Temp' || model.name === 'Humid'){
+          return_arr[j] = valueArr.length === 0 ? 0 : Math.round(average(valueArr)  * 10) / 10;
+         }
       }
       callback(return_arr);
     });
