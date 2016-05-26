@@ -28,7 +28,7 @@ router.get('/history/:time/:sensor_name', function(req, res){
       .findAll()
       .then(function(result){
         res.json(result.map(function(value, index){
-          return {x: index + 1, y: value.value}
+          return {x: index + 1, y: parseInt(value.value)}
         }));
       });
   }else{
