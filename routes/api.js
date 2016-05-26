@@ -20,11 +20,24 @@ router.get('/history/:time/:sensor_name', function(req, res){
   var time = req.params.time;
   var model = getModel(sensor_name);
 
-  getDateArray(model, time, function(data){
-      res.json(data.map(function(value, index){
-        return {x: index + 1, y: value}
-      }));
-  });
+  if((sensor_name === 'humid' || sensor_name === 'temp') && time === 'day'){
+    var today = new Date();
+    var endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+    var startDate = new Date(endDate - 24 * 60 * 60 * 1000);
+    model.scope({ method: ['days', { startDate: startDate , endDate: endDate}]})
+      .findAll()
+      .then(function(result){
+        res.json(result.map(function(value, index){
+          return {x: index + 1, y: value.value}
+        }));
+      });
+  }else{
+    getDateArray(model, time, function(data){
+        res.json(data.map(function(value, index){
+          return {x: index + 1, y: value}
+        }));
+    });
+  }
 });
 
 router.get('/last/:sensor_name', function(req, res) {
