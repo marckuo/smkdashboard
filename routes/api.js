@@ -4,6 +4,17 @@ var models  = require('../models');
 var getModel = require('../helpers/getSensorModel');
 var getDateArray = require('../helpers/getDateArray');
 
+router.get('/signed_in', function(req, res){
+
+  models.Member.count(
+    {where: {
+      signedIn: true
+    }}
+  ).then(function(result){
+    res.json(result);
+  });
+});
+
 router.get('/history/:time/:sensor_name', function(req, res){
   var sensor_name = req.params.sensor_name;
   var time = req.params.time;
