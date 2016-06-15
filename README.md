@@ -1,6 +1,9 @@
 # smkdashboard
 SMK Dashboard
 
+[![Check out the website!](http://www.coolblackattire.com/wp-content/uploads/2015/08/check-it-out-button-300x71.png  
+)](https://www.youtube.com/watch?v=Ia3EEDfclbI)
+
 clone repository
 cd into the main folder
 
